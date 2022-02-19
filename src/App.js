@@ -31,6 +31,19 @@ class App extends Component {
     visible: true,
     game: [],
   };
+
+  componentDidMount() {
+    fetch("http://jservice.io//api/random") /// Returns a Promise under the hood with fecth API
+      .then((response) => response.json()) //reurns second Promise
+      .then((res) => {
+        //turn object json file into array you have to turn state into a variable then push the data index i want into the varaibale then we finally set the state to game :data
+        let temp = this.state.game;
+        temp.push(res[0]);
+        this.setState({ game: temp });
+      }) //date rpresents the data from the api retuning then we changed the state of the app so the child components can catch the data in to the  new movieinfo:datta property so we can then use props to display the data on the child node with {this.props.movieInfo.Title}
+      .catch((error) => console.error(error));
+    //response Paramater will represent the Promise we get back from out fecth
+  }
   handleClick = (e) => {
     console.log("in here");
     this.setState(
@@ -53,7 +66,8 @@ class App extends Component {
           }) //date rpresents the data from the api retuning then we changed the state of the app so the child components can catch the data in to the  new movieinfo:datta property so we can then use props to display the data on the child node with {this.props.movieInfo.Title}
           .catch((error) => console.error(error));
         //response Paramater will represent the Promise we get back from out fecth
-      }
+      },
+      window.location.reload()
     );
   };
 
